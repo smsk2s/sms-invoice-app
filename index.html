@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Invoice Form</title> 
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#004aad" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border: 1px solid black;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .form-group {
+      margin: 5px 0;
+    }
+    .form-group.inline-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+    .form-group.inline-group > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .footer {
+      margin-top: 10px;
+      text-align: center;
+    }
+    button {
+      margin-top: 15px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      box-sizing: border-box;
+      height: 35px;
+      min-height: 35px;
+      border: 1px solid #000;
+      padding: 3px;
+      font-family: inherit;
+      font-size: inherit;
+      overflow-y: hidden;
+      resize: none;
+      transition: font-size 0.2s ease;
+    }
+    input.error, select.error, textarea.error {
+      border-color: red;
+    }
+    .tracking-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+    }
+    .tracking-group label {
+      font-weight: bold;
+      white-space: nowrap;
+      padding: 0 5px;
+    }
+    .tracking-group textarea {
+      flex: 0 0 45%;
+    }
+    .manager-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 3px 0;
+    }
+    .managers strong {
+      font-size: 16px;
+      display: block;
+      text-align: center;
+      margin-top: 5px;
+    }
+    .editing {
+      font-size: 1.25em !important;
+      z-index: 1000;
+    }
+    @media print {
+      @page {
+        size: A5 landscape;
+        margin: 0 !important;
+      }
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 210mm !important;
+        height: 148mm !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+      }
+      .container {
+        width: 210mm !important;
+        height: 148mm !important;
+        margin: 0 !important;
+        padding: 2mm 5mm !important;
+        border: 1mm solid #000 !important;
+        box-sizing: border-box;
+        transform: scale(1) !important;
+      }
+      textarea, input, select {
+        font-size: 16px !important;
+        height: 25px !important;
+        min-height: 25px !important;
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        padding: 2px !important;
+      }
+      .header h2 {
+        font-size: 24px !important;
+        margin: 3mm 0 !important;
+        line-height: 1.1;
+      }
+      .header p {
+        font-size: 16px !important;
+        margin: 2px 0 !important;
+      }
+      .footer p:first-child {
+        font-size: 18px !important;
+        margin: 2px 0;
+      }
+      .managers strong {
+        font-size: 16px !important;
+        line-height: 1.5;
+      }
+      .manager-line span {
+        font-size: 14px !important;
+      }
+      #fontSelectors, #buttons {
+        display: none !important;
+      }
+      .editing {
+        font-size: 12px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fontSelectors" class="font-selectors">
+    <div class="form-group">
+      <label for="fontStyle">Font Style:</label>
+      <select id="fontStyle" onchange="updateFontStyle()">
+        <option value="Arial">Arial</option>
+        <option value="Verdana">Verdana</option>
+        <option value="Times New Roman">Times New Roman</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Courier New">Courier New</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="fontSize">Font Size:</label>
+      <select id="fontSize" onchange="updateFontSize()">
+        <option value="14px">14px</option>
+        <option value="16px">16px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+        <option value="22px">22px</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="fontBold">Bold:</label>
+      <input type="checkbox" id="fontBold" onchange="updateFontBold()" />
+    </div>
+  </div>
+
+  <div class="container" id="formContainer">
+    <div class="header">
+      <h2>SAMARASINGHE MOTOR STORES (PVT) LTD.</h2>
+      <p>Stores No: 638/2, Kandy Road, Thorana Junction, Kelaniya, Sri Lanka. Tel: 2919451 Fax: 2919452</p>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required />
+    </div>
+
+    <div class="form-group">
+      <label for="InvoiceNo">Invoice No:</label>
+      <textarea id="InvoiceNo" name="InvoiceNo" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="CustomerName">Customer Name:</label>
+      <input type="text" id="CustomerName" name="CustomerName" list="customerList" required />
+      <datalist id="customerList"></datalist>
+    </div>
+
+    <div class="form-group inline-group">
+      <div>
+        <label for="Address">Address:</label>
+        <input type="text" id="Address" name="Address" list="addressList" required />
+        <datalist id="addressList"></datalist>
+      </div>
+      <div>
+        <label for="TPNumber">T/P Number:</label>
+        <input type="text" id="TPNumber" name="TPNumber" list="tpList" required />
+        <datalist id="tpList"></datalist>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="trackingNumber">Tracking Number:</label>
+      <div class="tracking-group">
+        <textarea id="trackingNumber1" name="trackingNumber1" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+        <label>TO</label>
+        <textarea id="trackingNumber2" name="trackingNumber2" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group inline-group">
+      <div>
+        <label for="Weight">Weight:</label>
+        <textarea id="Weight" name="Weight" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+      </div>
+      <div>
+        <label for="Box">Box:</label>
+        <textarea id="Box" name="Box" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+      </div>
+    </div>
+
+    <div class="form-group inline-group">
+      <div>
+        <label for="items">Items:</label>
+        <select id="items" name="items" required>
+          <option value="japan">Japan</option>
+          <option value="indian">Indian</option>
+          <option value="tyre">Tyre</option>
+          <option value="coolant">Coolant</option>
+          <option value="document">Document</option>
+        </select>
+      </div>
+      <div>
+        <label for="Checked">Checked:</label>
+        <textarea id="Checked" name="Checked" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <p style="text-align: center; color: #ccc; font-size: 12px;">Powered by K2S System</p>
+    </div>
+
+    <div class="footer">
+      <p>"If there is any issue with the goods, kindly inform us within 3 days."</p>
+      <div class="managers">
+        <div class="manager-line">
+          <span>*Stores Manager: Mr. Ranga 0773403939</span>
+          <span>*Logistics Manager: Mr. Shaman 0763055785</span>
+        </div>
+        <p><strong>හිතවත් courier මහත්වරුණි, අදාළ ආයතනයේ නිල මුද්‍රාව රහිතව භාණ්ඩ භාර දීමෙන් වලකින්න.</strong></p>
+      </div>
+    </div>
+
+    <div id="buttons">
+      <button onclick="saveToExcelAndPrint()">Save & Print</button>
+      <button onclick="clearForm()">New</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <script>
+    let invoiceRecords = JSON.parse(localStorage.getItem('invoiceRecords')) || [];
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    document.querySelectorAll('input, textarea, select').forEach(element => {
+      element.addEventListener('focus', function () {
+        this.classList.add('editing');
+      });
+      element.addEventListener('blur', function () {
+        this.classList.remove('editing');
+      });
+    });
+
+    function autoResizeTextarea(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      if (window.matchMedia('print').matches) {
+        textarea.style.height = '25px';
+      }
+    }
+
+    function updateFontStyle() {
+      document.getElementById('formContainer').style.fontFamily =
+        document.getElementById('fontStyle').value;
+    }
+
+    function updateFontSize() {
+      document.getElementById('formContainer').style.fontSize =
+        document.getElementById('fontSize').value;
+    }
+
+    function updateFontBold() {
+      document.getElementById('formContainer').style.fontWeight =
+        document.getElementById('fontBold').checked ? 'bold' : 'normal';
+    }
+
+    function saveAutocompleteValue(key, value, datalistId) {
+      if (!value) return;
+      let values = JSON.parse(localStorage.getItem(key)) || [];
+      if (!values.includes(value)) {
+        values.push(value);
+        localStorage.setItem(key, JSON.stringify(values));
+        updateDatalist(datalistId, values);
+      }
+    }
+
+    function updateDatalist(id, items) {
+      const datalist = document.getElementById(id);
+      datalist.innerHTML = '';
+      items.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item;
+        datalist.appendChild(option);
+      });
+    }
+
+    function saveToExcelAndPrint() {
+      const requiredFields = document.querySelectorAll('[required]');
+      let allFilled = true;
+
+      requiredFields.forEach(field => {
+        const value = field.value.trim();
+        if (!value && field.id !== 'trackingNumber2') {
+          field.classList.add('error');
+          allFilled = false;
+        } else {
+          field.classList.remove('error');
+        }
+      });
+
+      if (!allFilled) return alert('Please fill all required fields!');
+
+      const customerName = document.getElementById('CustomerName').value.trim();
+      const address = document.getElementById('Address').value.trim();
+      const tpNumber = document.getElementById('TPNumber').value.trim();
+
+      saveAutocompleteValue('customerNames', customerName, 'customerList');
+      saveAutocompleteValue('addresses', address, 'addressList');
+      saveAutocompleteValue('tpNumbers', tpNumber, 'tpList');
+
+      const newRecord = {
+        id: Date.now(),
+        date: document.getElementById('date').value,
+        invoiceNo: document.getElementById('InvoiceNo').value,
+        customerName,
+        address,
+        tpNumber,
+        tracking1: document.getElementById('trackingNumber1').value,
+        tracking2: document.getElementById('trackingNumber2').value,
+        weight: document.getElementById('Weight').value,
+        box: document.getElementById('Box').value,
+        items: document.getElementById('items').value,
+        checkedBy: document.getElementById('Checked').value
+      };
+
+      invoiceRecords.push(newRecord);
+      localStorage.setItem('invoiceRecords', JSON.stringify(invoiceRecords));
+
+      const ws = XLSX.utils.json_to_sheet(invoiceRecords);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Invoices");
+
+      const timestamp = new Date().toISOString().slice(0, 16).replace(/[^0-9]/g, '');
+      XLSX.writeFile(wb, `InvoiceData_${timestamp}.xlsx`);
+
+      window.print();
+    }
+
+    function clearForm() {
+      document.querySelectorAll('#formContainer input, #formContainer textarea')
+        .forEach(field => {
+          field.value = '';
+          field.classList.remove('error');
+          if (field.tagName === 'TEXTAREA') autoResizeTextarea(field);
+        });
+      document.getElementById('date').valueAsDate = new Date();
+    }
+
+    // Populate datalists on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDatalist('customerList', JSON.parse(localStorage.getItem('customerNames')) || []);
+      updateDatalist('addressList', JSON.parse(localStorage.getItem('addresses')) || []);
+      updateDatalist('tpList', JSON.parse(localStorage.getItem('tpNumbers')) || []);
+    });
+
+    // ✅ Weight field: Auto add "Kg" on Enter or Blur
+    const weightField = document.getElementById('Weight');
+    weightField.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        let val = this.value.trim();
+        if (val && !val.toLowerCase().endsWith('kg')) {
+          this.value = val + ' Kg';
+        }
+        autoResizeTextarea(this);
+      }
+    });
+    weightField.addEventListener('blur', function () {
+      let val = this.value.trim();
+      if (val && !val.toLowerCase().endsWith('kg')) {
+        this.value = val + ' Kg';
+      }
+      autoResizeTextarea(this);
+    });
+  </script>
+</body>
+</html>
