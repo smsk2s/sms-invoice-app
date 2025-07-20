@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Invoice Form</title> 
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#004aad" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#004aad" />
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -261,10 +261,10 @@
     </div>
 
     <div class="form-group">
-  <p style="text-align: center; color: #ccc; font-size: 12px; opacity: 0.6;">
-    Powered by K2S System suranjith
-  </p>
-</div>
+      <p style="text-align: center; color: #ccc; font-size: 12px; opacity: 0.5;">
+        Powered by K2S System suranjith
+      </p>
+    </div>
 
     <div class="footer">
       <p>"If there is any issue with the goods, kindly inform us within 3 days."</p>
@@ -410,24 +410,39 @@
       updateDatalist('tpList', JSON.parse(localStorage.getItem('tpNumbers')) || []);
     });
 
-    // ✅ Weight field: Auto add "Kg" on Enter or Blur
+    // Weight field: Auto add "Kg" on Blur
     const weightField = document.getElementById('Weight');
-    weightField.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        let val = this.value.trim();
-        if (val && !val.toLowerCase().endsWith('kg')) {
-          this.value = val + ' Kg';
-        }
-        autoResizeTextarea(this);
-      }
-    });
     weightField.addEventListener('blur', function () {
       let val = this.value.trim();
       if (val && !val.toLowerCase().endsWith('kg')) {
         this.value = val + ' Kg';
       }
       autoResizeTextarea(this);
+    });
+
+    // General Enter key handling to move to the next field
+    const formFields = document.querySelectorAll('#formContainer input, #formContainer textarea, #formContainer select');
+    const fieldsArray = Array.from(formFields);
+    const saveButton = document.querySelector('#buttons button:first-child');
+
+    fieldsArray.forEach((field, index) => {
+      field.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          if (field.id === 'Weight') {
+            let val = field.value.trim();
+            if (val && !val.toLowerCase().endsWith('kg')) {
+              field.value = val + ' Kg';
+            }
+            autoResizeTextarea(field);
+          }
+          if (index < fieldsArray.length - 1) {
+            fieldsArray[index + 1].focus();
+          } else {
+            saveButton.focus();
+          }
+        }
+      });
     });
   </script>
 </body>
