@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMS - Login & Invoice</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#004aad">
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Login Page Styles */
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #78b4e6, #0657ee);
+    }
+
+    .logo {
+      width: 150px;
+      animation: pulse 2s infinite ease-in-out;
+      margin-bottom: 30px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+    }
+
+    .login-box {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 25px;
+      color: #004aad;
+    }
+
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .login-box input:focus {
+      border-color: #004aad;
+      outline: none;
+    }
+
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      background: hsl(215, 97%, 47%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-box button:hover {
+      background: #002f6c;
+    }
+
+    .login-footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #eee;
+    }
+
+    /* Invoice Form Styles */
+    .invoice-container {
+      display: none; /* Hidden by default */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      border: none;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .form-group {
+      margin: 5px 0;
+    }
+
+    .form-group.inline-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+
+    .form-group.inline-group > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 15px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      box-sizing: border-box;
+      height: 35px;
+      min-height: 35px;
+      border: 1px solid #000;
+      padding: 3px;
+      font-family: inherit;
+      font-size: inherit;
+      overflow-y: hidden;
+      resize: none;
+      transition: font-size 0.2s ease;
+    }
+
+    input.error, select.error, textarea.error {
+      border-color: red;
+    }
+
+    .tracking-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+    }
+
+    .tracking-group label {
+      font-weight: bold;
+      white-space: nowrap;
+      padding: 0 5px;
+    }
+
+    .tracking-group textarea {
+      flex: 0 0 45%;
+    }
+
+    .manager-line {
+      display: flex;
+      justify-content: space-between;
+      margin: 3px 0;
+    }
+
+    .managers strong {
+      font-size: 16px;
+      display: block;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .editing {
+      font-size: 1.25em !important;
+      z-index: 1000;
+    }
+
+    @media print {
+      @page {
+        size: A5 landscape;
+        margin: 0 !important;
+      }
+
+      body {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 210mm !important;
+        height: 148mm !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+      }
+
+      .login-container, #fontSelectors, #buttons {
+        display: none !important;
+      }
+
+      .invoice Chili: System: .invoice-container {
+        display: flex !important;
+      }
+
+      .form-container {
+        width: 210mm !important;
+        height: 148mm !important;
+        margin: 0 !important;
+        padding: 2mm 5mm !important;
+        border: none;
+        box-sizing: border-box;
+        transform: scale(1) !important;
+      }
+
+      textarea, input, select {
+        font-size: 16px !important;
+        height: 25px !important;
+        min-height: 25px !important;
+        border: 1px solid #000 !important;
+        background: transparent !important;
+        padding: 2px !important;
+      }
+
+      .header h2 {
+        font-size: 24px !important;
+        margin: 3mm 0 !important;
+        line-height: 1.1;
+      }
+
+      .header p {
+        font-size: 16px !important;
+        margin: 2px 0 !important;
+      }
+
+      .footer p:first-child {
+        font-size: 18px !important;
+        margin: 2px 0;
+      }
+
+      .managers strong {
+        font-size: 16px !important;
+        line-height: 1.5;
+      }
+
+      .manager-line span {
+        font-size: 14px !important;
+      }
+
+      .editing {
+        font-size: 12px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Section -->
+  <div class="login-container" id="loginContainer">
+    <img src="sms-logo.png" alt="SMS Logo" class="logo">
+    <div class="login-box">
+      <h2>WELCOME TO SAMARASINGHE MOTOR STORES (PVT)LTD COURIER DIVISION</h2>
+       <p style="text-align: center; color: #1c72f3; font-size: 16px; opacity: 12;">
+          we wil add value to your order
+        </p>
+      <input type="text" placeholder="Username" id="username" required>
+      <input type="password" placeholder="Password" id="password" required>
+      <button onclick="login()">Login</button>
+    </div>
+    <div class="login-footer">© Powered by k2s System</div>
+    
+  </div>
+
+  <!-- Invoice Form Section -->
+  <div class="invoice-container" id="invoiceContainer">
+    <div id="fontSelectors" class="font-selectors">
+      <div class="form-group">
+        <label for="fontStyle">Font Style:</label>
+        <select id="fontStyle" onchange="updateFontStyle()">
+          <option value="Arial">Arial</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Courier New">Courier New</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fontSize">Font Size:</label>
+        <select id="fontSize" onchange="updateFontSize()">
+          <option value="14px">14px</option>
+          <option value="16px">16px</option>
+          <option value="18px">18px</option>
+          <option value="20px">20px</option>
+          <option value="22px">22px</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fontBold">Bold:</label>
+        <input type="checkbox" id="fontBold" onchange="updateFontBold()" />
+      </div>
+    </div>
+
+    <div class="form-container" id="formContainer">
+      <div class="header">
+        <h2>SAMARASINGHE MOTOR STORES (PVT) LTD.</h2>
+        <p>Stores No: 638/2, Kandy Road, Thorana Junction, Kelaniya, Sri Lanka. Tel: 2919451 Fax: 2919452</p>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required />
+      </div>
+
+      <div class="form-group">
+        <label for="InvoiceNo">Invoice No:</label>
+        <textarea id="InvoiceNo" name="InvoiceNo" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="CustomerName">Customer Name:</label>
+        <input type="text" id="CustomerName" name="CustomerName" list="customerList" required />
+        <datalist id="customerList"></datalist>
+      </div>
+
+      <div class="form-group inline-group">
+        <div>
+          <label for="Address">Address:</label>
+          <input type="text" id="Address" name="Address" list="addressList" required />
+          <datalist id="addressList"></datalist>
+        </div>
+        <div>
+          <label for="TPNumber">T/P Number:</label>
+          <input type="text" id="TPNumber" name="TPNumber" list="tpList" required />
+          <datalist id="tpList"></datalist>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="trackingNumber">Tracking Number:</label>
+        <div class="tracking-group">
+          <textarea id="trackingNumber1" name="trackingNumber1" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+          <label>TO</label>
+          <textarea id="trackingNumber2" name="trackingNumber2" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+        </div>
+      </div>
+
+      <div class="form-group inline-group">
+        <div>
+          <label for="Weight">Weight:</label>
+          <textarea id="Weight" name="Weight" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+        </div>
+        <div>
+          <label for="Box">Box:</label>
+          <textarea id="Box" name="Box" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-group inline-group">
+        <div>
+          <label for="items">Items:</label>
+          <select id="items" name="items" required>
+            <option value="japan">Japan</option>
+            <option value="indian">Indian</option>
+            <option value="tyre">Tyre</option>
+            <option value="coolant">Coolant</option>
+            <option value="document">Document</option>
+          </select>
+        </div>
+        <div>
+          <label for="Checked">Checked:</label>
+          <select id="Checked" name="Checked" required>
+            <option value="Mr.Shaman">Mr.Shaman</option>
+            <option value="Mr.Sandaruwan">Mr.Sandaruwan</option>
+             <option value="Mr.user01">Mr.user01</option>
+              <option value="Mr.user02">Mr.user02</option>
+                    </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <p style="text-align: center; color: #ccc; font-size: 10px; opacity: 0.9;">
+          Powered by K2S System sandaruwan
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>"If there is any issue with the goods, kindly inform us within 3 days."</p>
+        <div class="managers">
+          <div class="manager-line">
+            <span>*Stores Manager: Mr. Ranga 0773403939</span>
+            <span>*Logistics Manager: Mr. Shaman 0763055785</span>
+          </div>
+          <p><strong>හිතවත් courier මහත්වරුණි, අදාළ ආයතනයේ නිල මුද්‍රාව රහිතව භාණ්ඩ භාර දීමෙන් වලකින්න.</strong></p>
+        </div>
+      </div>
+
+      <div id="buttons">
+        <button onclick="saveToExcelAndPrint()">Save & Print</button>
+        <button onclick="clearForm()">New</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+  <script>
+    // Login Logic
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Please enter both username and password.");
+        return;
+      }
+
+      // Simple client-side authentication (replace with server-side in production)
+      if (username === "shaman" && password === "k2s") {
+        document.getElementById("loginContainer").style.display = "none";
+        document.getElementById("invoiceContainer").style.display = "block";
+      } else {
+        alert("Invalid username or password.");
+      }
+    }
+
+    // Invoice Form Logic
+    let invoiceRecords = JSON.parse(localStorage.getItem('invoiceRecords')) || [];
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    document.querySelectorAll('#formContainer input, #formContainer textarea, #formContainer select').forEach(element => {
+      element.addEventListener('focus', function () {
+        this.classList.add('editing');
+      });
+      element.addEventListener('blur', function () {
+        this.classList.remove('editing');
+      });
+    });
+
+    function autoResizeTextarea(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = `${textarea.scrollHeight}px`;
+      if (window.matchMedia('print').matches) {
+        textarea.style.height = '25px';
+      }
+    }
+
+    function updateFontStyle() {
+      document.getElementById('formContainer').style.fontFamily =
+        document.getElementById('fontStyle').value;
+    }
+
+    function updateFontSize() {
+      document.getElementById('formContainer').style.fontSize =
+        document.getElementById('fontSize').value;
+    }
+
+    function updateFontBold() {
+      document.getElementById('formContainer').style.fontWeight =
+        document.getElementById('fontBold').checked ? 'bold' : 'normal';
+    }
+
+    function saveAutocompleteValue(key, value, datalistId) {
+      if (!value) return;
+      let values = JSON.parse(localStorage.getItem(key)) || [];
+      if (!values.includes(value)) {
+        values.push(value);
+        localStorage.setItem(key, JSON.stringify(values));
+        updateDatalist(datalistId, values);
+      }
+    }
+
+    function updateDatalist(id, items) {
+      const datalist = document.getElementById(id);
+      datalist.innerHTML = '';
+      items.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item;
+        datalist.appendChild(option);
+      });
+    }
+
+    function saveToExcelAndPrint() {
+      const requiredFields = document.querySelectorAll('#formContainer [required]');
+      let allFilled = true;
+
+      requiredFields.forEach(field => {
+        const value = field.value.trim();
+        if (!value && field.id !== 'trackingNumber2') {
+          field.classList.add('error');
+          allFilled = false;
+        } else {
+          field.classList.remove('error');
+        }
+      });
+
+      if (!allFilled) return alert('Please fill all required fields!');
+
+      const customerName = document.getElementById('CustomerName').value.trim();
+      const address = document.getElementById('Address').value.trim();
+      const tpNumber = document.getElementById('TPNumber').value.trim();
+
+      saveAutocompleteValue('customerNames', customerName, 'customerList');
+      saveAutocompleteValue('addresses', address, 'addressList');
+      saveAutocompleteValue('tpNumbers', tpNumber, 'tpList');
+
+      const newRecord = {
+        id: Date.now(),
+        date: document.getElementById('date').value,
+        invoiceNo: document.getElementById('InvoiceNo').value,
+        customerName,
+        address,
+        tpNumber,
+        tracking1: document.getElementById('trackingNumber1').value,
+        tracking2: document.getElementById('trackingNumber2').value,
+        weight: document.getElementById('Weight').value,
+        box: document.getElementById('Box').value,
+        items: document.getElementById('items').value,
+        checkedBy: document.getElementById('Checked').value
+      };
+
+      invoiceRecords.push(newRecord);
+      localStorage.setItem('invoiceRecords', JSON.stringify(invoiceRecords));
+
+      const ws = XLSX.utils.json_to_sheet(invoiceRecords);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Invoices");
+
+      const timestamp = new Date().toISOString().slice(0, 16).replace(/[^0-9]/g, '');
+      XLSX.writeFile(wb, `InvoiceData_${timestamp}.xlsx`);
+// ✅ 2. Save to Google Sheet
+  const webAppURL = 'https://script.google.com/macros/s/AKfycbwpvaC7yneXPZwYb9HdOU4VtgvkXTFqq9ITq5GrJbmNDlA6u2OF-_iW4TA6M6FQbZPG/exec';
+
+  fetch(webAppURL, {
+    method: 'POST',
+    body: JSON.stringify(newRecord)
+  })
+  .then(response => response.text())
+  .then(result => {
+    console.log('Saved to Google Sheet:', result);
+    // Optional: window.print();
+  })
+  .catch(error => {
+    console.error('Error saving to Google Sheets:', error);
+  });
+      window.print();
+    }
+
+    function clearForm() {
+      document.querySelectorAll('#formContainer input, #formContainer textarea')
+        .forEach(field => {
+          field.value = '';
+          field.classList.remove('error');
+          if (field.tagName === 'TEXTAREA') autoResizeTextarea(field);
+        });
+      document.getElementById('date').valueAsDate = new Date();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateDatalist('customerList', JSON.parse(localStorage.getItem('customerNames')) || []);
+      updateDatalist('addressList', JSON.parse(localStorage.getItem('addresses')) || []);
+      updateDatalist('tpList', JSON.parse(localStorage.getItem('tpNumbers')) || []);
+    });
+
+    const weightField = document.getElementById('Weight');
+    weightField.addEventListener('blur', function () {
+      let val = this.value.trim();
+      if (val && !val.toLowerCase().endsWith('kg')) {
+        this.value = val + ' Kg';
+      }
+      autoResizeTextarea(this);
+    });
+
+    const formFields = document.querySelectorAll('#formContainer input, #formContainer textarea, #formContainer select');
+    const fieldsArray = Array.from(formFields);
+    const saveButton = document.querySelector('#buttons button:first-child');
+
+    fieldsArray.forEach((field, index) => {
+      field.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          if (field.id === 'Weight') {
+            let val = field.value.trim();
+            if (val && !val.toLowerCase().endsWith('kg')) {
+              field.value = val + ' Kg';
+            }
+            autoResizeTextarea(field);
+          }
+          if (index < fieldsArray.length - 1) {
+            fieldsArray[index + 1].focus();
+          } else {
+            saveButton.focus();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
