@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SMS - Login & Invoice</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#004aad">
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#004aad" />
   <style>
     /* Reset */
     * {
@@ -32,7 +32,8 @@
     }
 
     @keyframes pulse {
-      0%, 100% {
+      0%,
+      100% {
         transform: scale(1);
         opacity: 1;
       }
@@ -46,7 +47,7 @@
       background: white;
       padding: 30px 25px;
       border-radius: 15px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
       width: 90%;
       max-width: 360px;
       text-align: center;
@@ -145,8 +146,8 @@
       font-weight: bold;
     }
 
-    input[type="text"],
-    input[type="date"],
+    input[type='text'],
+    input[type='date'],
     select,
     textarea {
       width: 100%;
@@ -164,7 +165,9 @@
       transition: font-size 0.2s ease;
     }
 
-    input.error, select.error, textarea.error {
+    input.error,
+    select.error,
+    textarea.error {
       border-color: red;
     }
 
@@ -220,11 +223,13 @@
         background: transparent;
       }
 
-      .login-container, #fontSelectors, #buttons {
+      .login-container,
+      #fontSelectors,
+      #buttons {
         display: none !important;
       }
 
-      .invoice Chili: System: .invoice-container {
+      .invoice-container {
         display: flex !important;
       }
 
@@ -238,7 +243,9 @@
         transform: scale(1) !important;
       }
 
-      textarea, input, select {
+      textarea,
+      input,
+      select {
         font-size: 16px !important;
         height: 25px !important;
         min-height: 25px !important;
@@ -281,18 +288,17 @@
 <body>
   <!-- Login Section -->
   <div class="login-container" id="loginContainer">
-    <img src="sms-logo.png" alt="SMS Logo" class="logo">
+    <img src="sms-logo.png" alt="SMS Logo" class="logo" />
     <div class="login-box">
       <h2>WELCOME TO SAMARASINGHE MOTOR STORES (PVT)LTD COURIER DIVISION</h2>
-       <p style="text-align: center; color: #1c72f3; font-size: 16px; opacity: 12;">
-          we wil add value to your order
-        </p>
-      <input type="text" placeholder="Username" id="username" required>
-      <input type="password" placeholder="Password" id="password" required>
+      <p style="text-align: center; color: #1c72f3; font-size: 16px; opacity: 12;">
+        we wil add value to your order
+      </p>
+      <input type="text" placeholder="Username" id="username" required />
+      <input type="password" placeholder="Password" id="password" required />
       <button onclick="login()">Login</button>
     </div>
     <div class="login-footer">© Powered by k2s System</div>
-    
   </div>
 
   <!-- Invoice Form Section -->
@@ -312,7 +318,7 @@
         <label for="fontSize">Font Size:</label>
         <select id="fontSize" onchange="updateFontSize()">
           <option value="14px">14px</option>
-          <option value="16px">16px</option>
+          <option value="16px" selected>16px</option>
           <option value="18px">18px</option>
           <option value="20px">20px</option>
           <option value="22px">22px</option>
@@ -327,7 +333,10 @@
     <div class="form-container" id="formContainer">
       <div class="header">
         <h2>SAMARASINGHE MOTOR STORES (PVT) LTD.</h2>
-        <p>Stores No: 638/2, Kandy Road, Thorana Junction, Kelaniya, Sri Lanka. Tel: 2919451 Fax: 2919452</p>
+        <p>
+          Stores No: 638/2, Kandy Road, Thorana Junction, Kelaniya, Sri Lanka.
+          Tel: 2919451 Fax: 2919452
+        </p>
       </div>
 
       <div class="form-group">
@@ -337,19 +346,37 @@
 
       <div class="form-group">
         <label for="InvoiceNo">Invoice No:</label>
-        <textarea id="InvoiceNo" name="InvoiceNo" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+        <textarea
+          id="InvoiceNo"
+          name="InvoiceNo"
+          rows="1"
+          oninput="autoResizeTextarea(this)"
+          required
+        ></textarea>
       </div>
 
       <div class="form-group">
         <label for="CustomerName">Customer Name:</label>
-        <input type="text" id="CustomerName" name="CustomerName" list="customerList" required />
+        <input
+          type="text"
+          id="CustomerName"
+          name="CustomerName"
+          list="customerList"
+          required
+        />
         <datalist id="customerList"></datalist>
       </div>
 
       <div class="form-group inline-group">
         <div>
           <label for="Address">Address:</label>
-          <input type="text" id="Address" name="Address" list="addressList" required />
+          <input
+            type="text"
+            id="Address"
+            name="Address"
+            list="addressList"
+            required
+          />
           <datalist id="addressList"></datalist>
         </div>
         <div>
@@ -362,20 +389,43 @@
       <div class="form-group">
         <label for="trackingNumber">Tracking Number:</label>
         <div class="tracking-group">
-          <textarea id="trackingNumber1" name="trackingNumber1" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+          <textarea
+            id="trackingNumber1"
+            name="trackingNumber1"
+            rows="1"
+            oninput="autoResizeTextarea(this)"
+            required
+          ></textarea>
           <label>TO</label>
-          <textarea id="trackingNumber2" name="trackingNumber2" rows="1" oninput="autoResizeTextarea(this)"></textarea>
+          <textarea
+            id="trackingNumber2"
+            name="trackingNumber2"
+            rows="1"
+            oninput="autoResizeTextarea(this)"
+          ></textarea>
         </div>
       </div>
 
       <div class="form-group inline-group">
         <div>
           <label for="Weight">Weight:</label>
-          <textarea id="Weight" name="Weight" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+          <textarea
+            id="Weight"
+            name="Weight"
+            rows="1"
+            oninput="autoResizeTextarea(this)"
+            required
+          ></textarea>
         </div>
         <div>
           <label for="Box">Box:</label>
-          <textarea id="Box" name="Box" rows="1" oninput="autoResizeTextarea(this)" required></textarea>
+          <textarea
+            id="Box"
+            name="Box"
+            rows="1"
+            oninput="autoResizeTextarea(this)"
+            required
+          ></textarea>
         </div>
       </div>
 
@@ -395,14 +445,21 @@
           <select id="Checked" name="Checked" required>
             <option value="Mr.Shaman">Mr.Shaman</option>
             <option value="Mr.Sandaruwan">Mr.Sandaruwan</option>
-             <option value="Mr.user01">Mr.user01</option>
-              <option value="Mr.user02">Mr.user02</option>
-                    </select>
+            <option value="Mr.user01">Mr.user01</option>
+            <option value="Mr.user02">Mr.user02</option>
+          </select>
         </div>
       </div>
 
       <div class="form-group">
-        <p style="text-align: center; color: #ccc; font-size: 10px; opacity: 0.9;">
+        <p
+          style="
+            text-align: center;
+            color: #ccc;
+            font-size: 10px;
+            opacity: 0.9;
+          "
+        >
           Powered by K2S System sandaruwan
         </p>
       </div>
@@ -414,7 +471,12 @@
             <span>*Stores Manager: Mr. Ranga 0773403939</span>
             <span>*Logistics Manager: Mr. Shaman 0763055785</span>
           </div>
-          <p><strong>හිතවත් courier මහත්වරුණි, අදාළ ආයතනයේ නිල මුද්‍රාව රහිතව භාණ්ඩ භාර දීමෙන් වලකින්න.</strong></p>
+          <p>
+            <strong
+              >හිතවත් courier මහත්වරුණි, අදාළ ආයතනයේ නිල මුද්‍රාව
+              රහිතව භාණ්ඩ භාර දීමෙන් වලකින්න.</strong
+            >
+          </p>
         </div>
       </div>
 
@@ -429,20 +491,20 @@
   <script>
     // Login Logic
     function login() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
       if (!username || !password) {
-        alert("Please enter both username and password.");
+        alert('Please enter both username and password.');
         return;
       }
 
       // Simple client-side authentication (replace with server-side in production)
-      if (username === "sms" && password === "k2s") {
-        document.getElementById("loginContainer").style.display = "none";
-        document.getElementById("invoiceContainer").style.display = "block";
+      if (username === 'sms' && password === 'k2s') {
+        document.getElementById('loginContainer').style.display = 'none';
+        document.getElementById('invoiceContainer').style.display = 'block';
       } else {
-        alert("Invalid username or password.");
+        alert('Invalid username or password.');
       }
     }
 
@@ -451,14 +513,16 @@
 
     document.getElementById('date').valueAsDate = new Date();
 
-    document.querySelectorAll('#formContainer input, #formContainer textarea, #formContainer select').forEach(element => {
-      element.addEventListener('focus', function () {
-        this.classList.add('editing');
+    document
+      .querySelectorAll('#formContainer input, #formContainer textarea, #formContainer select')
+      .forEach((element) => {
+        element.addEventListener('focus', function () {
+          this.classList.add('editing');
+        });
+        element.addEventListener('blur', function () {
+          this.classList.remove('editing');
+        });
       });
-      element.addEventListener('blur', function () {
-        this.classList.remove('editing');
-      });
-    });
 
     function autoResizeTextarea(textarea) {
       textarea.style.height = 'auto';
@@ -496,18 +560,72 @@
     function updateDatalist(id, items) {
       const datalist = document.getElementById(id);
       datalist.innerHTML = '';
-      items.forEach(item => {
+      items.forEach((item) => {
         const option = document.createElement('option');
         option.value = item;
         datalist.appendChild(option);
       });
     }
 
+    // New function: Save Excel with separate sheets by date with headers on each sheet
+    function saveToExcelWithDateSheetsAndHeaders(records) {
+      const wb = XLSX.utils.book_new();
+
+      // Define column headers as needed
+      const headers = [
+        'id',
+        'date',
+        'invoiceNo',
+        'customerName',
+        'address',
+        'tpNumber',
+        'tracking1',
+        'tracking2',
+        'weight',
+        'box',
+        'items',
+        'checkedBy',
+      ];
+
+      // Group records by their date property
+      const grouped = records.reduce((acc, rec) => {
+        const dateKey = rec.date || 'UnknownDate';
+        if (!acc[dateKey]) acc[dateKey] = [];
+        acc[dateKey].push(rec);
+        return acc;
+      }, {});
+
+      // For each date group, create a worksheet with header row + data rows
+      Object.entries(grouped).forEach(([date, items]) => {
+        // Prepare sheet data as array of arrays starting with headers row
+        const sheetData = [headers];
+
+        // Add rows corresponding to each item, matching headers order
+        items.forEach((item) => {
+          const row = headers.map((h) => (item[h] !== undefined ? item[h] : ''));
+          sheetData.push(row);
+        });
+
+        // Create worksheet from array of arrays
+        const ws = XLSX.utils.aoa_to_sheet(sheetData);
+
+        // Replace illegal Excel sheet name characters and limit length to 31
+        const safeSheetName = date.replace(/[/\\?*[\]:]/g, '-').slice(0, 31);
+
+        XLSX.utils.book_append_sheet(wb, ws, safeSheetName);
+      });
+
+      // Timestamp for file name
+      const timestamp = new Date().toISOString().slice(0, 16).replace(/[^0-9]/g, '');
+
+      XLSX.writeFile(wb, `InvoiceData_ByDate_${timestamp}.xlsx`);
+    }
+
     function saveToExcelAndPrint() {
       const requiredFields = document.querySelectorAll('#formContainer [required]');
       let allFilled = true;
 
-      requiredFields.forEach(field => {
+      requiredFields.forEach((field) => {
         const value = field.value.trim();
         if (!value && field.id !== 'trackingNumber2') {
           field.classList.add('error');
@@ -528,7 +646,7 @@
       saveAutocompleteValue('tpNumbers', tpNumber, 'tpList');
 
       const newRecord = {
-        id: Date.now(),
+        id: Date.now(), // unique timestamp as id
         date: document.getElementById('date').value,
         invoiceNo: document.getElementById('InvoiceNo').value,
         customerName,
@@ -539,43 +657,41 @@
         weight: document.getElementById('Weight').value,
         box: document.getElementById('Box').value,
         items: document.getElementById('items').value,
-        checkedBy: document.getElementById('Checked').value
+        checkedBy: document.getElementById('Checked').value,
       };
 
       invoiceRecords.push(newRecord);
       localStorage.setItem('invoiceRecords', JSON.stringify(invoiceRecords));
 
-      const ws = XLSX.utils.json_to_sheet(invoiceRecords);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Invoices");
+      // Call the new function that saves data grouped by date with headers on each sheet
+      saveToExcelWithDateSheetsAndHeaders(invoiceRecords);
 
-      const timestamp = new Date().toISOString().slice(0, 16).replace(/[^0-9]/g, '');
-      XLSX.writeFile(wb, `InvoiceData_${timestamp}.xlsx`);
-// ✅ 2. Save to Google Sheet
-  const webAppURL = 'https://script.google.com/macros/s/AKfycbwpvaC7yneXPZwYb9HdOU4VtgvkXTFqq9ITq5GrJbmNDlA6u2OF-_iW4TA6M6FQbZPG/exec';
+      // Save to Google Sheet (unchanged from before)
+      const webAppURL =
+        'https://script.google.com/macros/s/AKfycbwpvaC7yneXPZwYb9HdOU4VtgvkXTFqq9ITq5GrJbmNDlA6u2OF-_iW4TA6M6FQbZPG/exec';
 
-  fetch(webAppURL, {
-    method: 'POST',
-    body: JSON.stringify(newRecord)
-  })
-  .then(response => response.text())
-  .then(result => {
-    console.log('Saved to Google Sheet:', result);
-    // Optional: window.print();
-  })
-  .catch(error => {
-    console.error('Error saving to Google Sheets:', error);
-  });
+      fetch(webAppURL, {
+        method: 'POST',
+        body: JSON.stringify(newRecord),
+      })
+        .then((response) => response.text())
+        .then((result) => {
+          console.log('Saved to Google Sheet:', result);
+          // Optional: window.print();
+        })
+        .catch((error) => {
+          console.error('Error saving to Google Sheets:', error);
+        });
+
       window.print();
     }
 
     function clearForm() {
-      document.querySelectorAll('#formContainer input, #formContainer textarea')
-        .forEach(field => {
-          field.value = '';
-          field.classList.remove('error');
-          if (field.tagName === 'TEXTAREA') autoResizeTextarea(field);
-        });
+      document.querySelectorAll('#formContainer input, #formContainer textarea').forEach((field) => {
+        field.value = '';
+        field.classList.remove('error');
+        if (field.tagName === 'TEXTAREA') autoResizeTextarea(field);
+      });
       document.getElementById('date').valueAsDate = new Date();
     }
 
@@ -599,7 +715,7 @@
     const saveButton = document.querySelector('#buttons button:first-child');
 
     fieldsArray.forEach((field, index) => {
-      field.addEventListener('keydown', function(event) {
+      field.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
           event.preventDefault();
           if (field.id === 'Weight') {
